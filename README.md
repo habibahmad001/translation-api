@@ -26,7 +26,7 @@ This is a Laravel-based API-driven service for managing translations across mult
 ## Installation & Setup
 ### 1. Clone the Repository
 ```sh
-git clone https://github.com/your-repo/translation-api.git
+git clone https://github.com/habibahmad001/translation-api.git
 cd translation-api
 ```
 

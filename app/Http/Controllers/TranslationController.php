@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Translation;
 use OpenApi\Annotations as OA;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @OA\SecurityScheme(
@@ -55,7 +56,7 @@ class TranslationController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Translation::query()->orderByDesc("id");
+        $query = Translation::select(['key', 'content', 'locale', 'tag', 'created_at', 'updated_at'])->orderByDesc("id");
 
         if ($request->has('tag')) {
             $query->where('tag', $request->tag);
@@ -196,9 +197,19 @@ class TranslationController extends Controller
      *     )
      * )
      */
+//    public function export()
+//    {
+//        $translations = Translation::all()->groupBy('locale');
+//
+//        return response()->json($translations);
+//    }
+
     public function export()
     {
-        $translations = Translation::all()->groupBy('locale');
+        $translations = DB::table('translations')
+            ->select('id', 'key', 'content', 'locale', 'tag', 'created_at', 'updated_at')
+            ->get()
+            ->groupBy('locale');
 
         return response()->json($translations);
     }

@@ -1,0 +1,96 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My API",
+        "description": "This is a sample API documentation.",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.example.com/support",
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/translations": {
+            "get": {
+                "summary": "Get all translations",
+                "operationId": "dafa208e862d8826463c5fe3a11818f6",
+                "parameters": [
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of translations",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Translation"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Translation": {
+                "required": [
+                    "key",
+                    "content",
+                    "locale"
+                ],
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "example": "example_key"
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "This is an example translation."
+                    },
+                    "locale": {
+                        "type": "string",
+                        "example": "en"
+                    },
+                    "tag": {
+                        "type": "string",
+                        "example": "example_tag"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

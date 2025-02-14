@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@3/swagger-ui.css">
+</head>
+<body>
+<div id="swagger-ui"></div>
+<script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+<script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-standalone-preset.js"></script>
+<script>
+    window.onload = function() {
+        window.ui = SwaggerUIBundle({
+            url: "./swagger.yaml", // Path to your OpenAPI spec file
+            dom_id: '#swagger-ui',
+            presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+            ],
+            layout: "StandaloneLayout",
+            // Enable OAuth2 authentication
+            configs: {
+                swaggerOptions: {
+                    oauth2RedirectUrl: window.location.origin + '/swagger-ui/oauth2-redirect.html',
+                    initOAuth: {
+                        clientId: '1', // Replace with your Passport client ID
+                        clientSecret: 'C3DmrfHrYKCyi0DLmVDXnf1FmdxtjBmCcQ4HmGiT', // Replace with your Passport client secret
+                        appName: 'Swagger UI',
+                        scopes: [],
+                        useBasicAuthenticationWithAccessCodeGrant: true
+                    }
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

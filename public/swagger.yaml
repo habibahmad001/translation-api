@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  title: 'My API'
+  description: 'This is a sample API documentation.'
+  contact:
+    name: 'API Support'
+    url: 'http://www.example.com/support'
+    email: support@example.com
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+paths:
+  /api/translations:
+    get:
+      summary: 'Get all translations'
+      operationId: 434a55804ca50c9845bd4781c222a539
+      parameters:
+        -
+          name: tag
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: locale
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: key
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'A list of translations'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Translation'
+      security:
+        -
+          passport: []
+    post:
+      summary: 'Create a new translation'
+      operationId: fe38d8cf02ff5c92d2cd8d5dfb095e5f
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TranslationRequest'
+      responses:
+        '201':
+          description: 'Translation created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Translation'
+      security:
+        -
+          passport: []
+  '/api/translations/{id}':
+    put:
+      summary: 'Update a translation'
+      operationId: e314c7afaf04580ad65b747c8a1f7ce6
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TranslationRequest'
+      responses:
+        '200':
+          description: 'Translation updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Translation'
+      security:
+        -
+          passport: []
+    delete:
+      summary: 'Delete a translation'
+      operationId: 7d0107320d96a296dcfcb666934c0e3a
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: 'Translation deleted'
+      security:
+        -
+          passport: []
+  /api/translations/export:
+    get:
+      summary: 'Export all translations grouped by locale'
+      operationId: 52e76cf9a0dbfcb42b1d151b49f2b09b
+      responses:
+        '200':
+          description: 'Translations exported'
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items: { $ref: '#/components/schemas/Translation' }
+      security:
+        -
+          passport: []
+components:
+  schemas:
+    Translation:
+      required:
+        - key
+        - content
+        - locale
+      properties:
+        key:
+          type: string
+          example: example_key
+        content:
+          type: string
+          example: 'This is an example translation.'
+        locale:
+          type: string
+          example: en
+        tag:
+          type: string
+          example: example_tag
+      type: object
+  securitySchemes:
+    passport:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: /oauth/token
+          refreshUrl: /oauth/token/refresh
+          scopes: {  }

@@ -19,6 +19,18 @@ use Illuminate\Support\Facades\DB;
  *     )
  * )
  */
+
+/**
+ * @OA\Schema(
+ *     schema="TranslationRequest",
+ *     type="object",
+ *     required={"key", "content", "locale"},
+ *     @OA\Property(property="key", type="string", example="example_key"),
+ *     @OA\Property(property="content", type="string", example="This is an example translation."),
+ *     @OA\Property(property="locale", type="string", example="en"),
+ *     @OA\Property(property="tag", type="string", example="example_tag"),
+ * )
+ */
 class TranslationController extends Controller
 {
     /**
@@ -74,16 +86,31 @@ class TranslationController extends Controller
     /**
      * @OA\Post(
      *     path="/api/translations",
-     *     security={{"passport": {}}},
      *     summary="Create a new translation",
+     *     tags={"Translations"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/TranslationRequest")
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Translation created",
-     *         @OA\JsonContent(ref="#/components/schemas/Translation")
+     *         description="Translation created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="key", type="string", example="example_key"),
+     *             @OA\Property(property="content", type="string", example="This is an example translation."),
+     *             @OA\Property(property="locale", type="string", example="en"),
+     *             @OA\Property(property="tag", type="string", example="example_tag"),
+     *             @OA\Property(property="created_at", type="string", format="date-time", example="2023-01-01T00:00:00Z"),
+     *             @OA\Property(property="updated_at", type="string", format="date-time", example="2023-01-01T00:00:00Z"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="object")
+     *         )
      *     )
      * )
      */
